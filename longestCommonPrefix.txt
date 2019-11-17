@@ -1,0 +1,97 @@
+Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string "".
+
+Example 1:
+
+Input: ["flower","flow","flight"]
+Output: "fl"
+Example 2:
+
+Input: ["dog","racecar","car"]
+Output: ""
+Explanation: There is no common prefix among the input strings.
+Note:
+
+All given inputs are in lowercase letters a-z.
+
+function longestCommonPrefix (arr) {
+if (arr.length === 0) return ""
+const longestWord = getLongestWord(arr) // Helper Method
+const trie = new Trie()
+let result = longestWord
+trie.addWord(longestWord) // method in trie class
+
+for(const word of arr){
+  const currPrefix = trie.getPrefix(word) // method in trie class
+  if(currPrefix.length === 0) return ""
+  if(currPrefix.length < result.length){
+    result = currPrefix
+  }
+}
+return result
+}
+
+function getLongestWord(arr){
+  let currLongest = arr[0]
+  for(const word of arr){
+    if(word.length >= currLongest.length){
+      currLongest = word
+    }
+  }
+  return currLongest
+}
+
+
+class Trie {
+  constructor(){
+    this.root = {}
+  }
+  
+  addWord(word){
+    let node = this.root
+    for(const letter of word){
+      if(!(letter in node)) node[letter] = {}
+      node = node[letter]
+    }
+    node["*"] = word
+  }
+  
+  getPrefix(word){
+    let node = this.root
+    let result = ""
+    for(let letter of word){
+      if(!(letter in node)) return result
+      result+= letter
+      node = node[letter]
+    }
+    return result
+  }
+}
+
+
+
+
+
+
+Time = O(n * w)
+space = O(w)
+sodo code
+Bad solution --> have nested for loop, create all combo
+Use trie
+function longestCommon(arr){
+1. longestWord = getLongestWord(arr) // Find the longest word in our array --> O(n)
+2. const trie = new Trie() //create a trie with the longest word
+3. create result string = longestWord
+trie.addWord(longestWord)
+
+for (word of words){
+  currPrefix = trie.getPrefix(word);
+  if(currPrefix.length === 0) return ""
+  if(currPrefix.length <= result.length){
+  result = currPrefix
+  }
+}
+
+return result
+}
