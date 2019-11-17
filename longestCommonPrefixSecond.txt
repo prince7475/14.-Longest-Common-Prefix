@@ -1,0 +1,17 @@
+
+function longestCommonPrefix(arr){
+  if(arr.length === 0) return ""
+  let result = ""
+  
+  for(let idx = 0; idx < arr[0].length; idx++){
+  let letter = arr[0][idx]
+    for(let i = 1; i < arr.length; i++){
+      let currWord = arr[i]
+      if(idx >= currWord.length || letter != currWord[idx]){
+        return result
+      }
+    }
+    result+= letter
+  }
+  return result
+}
